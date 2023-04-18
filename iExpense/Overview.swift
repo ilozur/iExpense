@@ -32,6 +32,8 @@ struct Overview: View {
     @State private var showingSheet = false
     @State private var numbers = [Int]()
     @State private var currentNumber = 1
+    @State private var tapCount = UserDefaults.standard.integer(forKey: "Tap")
+    @AppStorage("newTapCount") private var newTapCount = 0
     
     var body: some View {
         NavigationView {
@@ -56,6 +58,14 @@ struct Overview: View {
                 Button("Add number") {
                     numbers.append(currentNumber)
                     currentNumber += 1
+                }
+                Button("Tap count: \(tapCount)") {
+                    tapCount += 1
+                    UserDefaults.standard.set(tapCount, forKey: "Tap")
+                }
+                Button("New tap count: \(newTapCount)") {
+                    newTapCount += 1
+                    
                 }
             }
             .navigationTitle("Overview")
