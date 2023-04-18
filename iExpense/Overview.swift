@@ -12,6 +12,11 @@ class User: ObservableObject {
     @Published var lastName = "Baggins"
 }
 
+struct NewUser: Codable  {
+    let firstName: String
+    let lastName: String
+}
+
 struct NewOverview: View {
     @Environment(\.dismiss) var dismiss
     
@@ -29,10 +34,12 @@ struct NewOverview: View {
 struct Overview: View {
     @StateObject private var user = User()
 
+    @State private var newUSer = NewUser(firstName: "Taylor", lastName: "Swift")
     @State private var showingSheet = false
     @State private var numbers = [Int]()
     @State private var currentNumber = 1
     @State private var tapCount = UserDefaults.standard.integer(forKey: "Tap")
+    
     @AppStorage("newTapCount") private var newTapCount = 0
     
     var body: some View {
@@ -66,6 +73,12 @@ struct Overview: View {
                 Button("New tap count: \(newTapCount)") {
                     newTapCount += 1
                     
+                }
+                Button("Save User") {
+                    let encoder = JSONEncoder()
+                    if let data = try? encoder.encode(newUSer) {
+                        UserDefaults.standard.set(data, forKey: "UserData")
+                    }
                 }
             }
             .navigationTitle("Overview")
