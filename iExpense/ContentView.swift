@@ -34,10 +34,10 @@ struct LargeExpense: ViewModifier {
 
 extension View {
     func smallExpenseStyle() -> some View {
-            modifier(LargeExpense())
+            modifier(SmallExpense())
     }
     func mediumExpenseStyle() -> some View {
-            modifier(LargeExpense())
+            modifier(MediumExpense())
     }
     func largeExpenseStyle() -> some View {
             modifier(LargeExpense())
